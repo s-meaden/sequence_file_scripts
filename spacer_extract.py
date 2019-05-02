@@ -17,8 +17,10 @@ outfile = sys.argv[2] # name of output i.e. spacers.fna
 with open(outfile,"w") as f:
 	for record in SeqIO.parse(filename, "fasta"):
 		for match in re.finditer('GG', str(record.seq), overlapped=True): # get iterator to print end of PAM
-			spacer_start = match.end() # Location of end of PAM
-			spacer_end = spacer_start + 32 # Can vary for spacer length 
+			#spacer_start = match.end() # Location of end of PAM
+			spacer_end = match.start()
+			spacer_start = spacer_end - 32 # Forgot spacer preceeds PAM
+			#spacer_end = spacer_start + 32 # Can vary for spacer length 
 			f.write(">" + str(spacer_start) + "\n" + str(record.seq)[spacer_start:spacer_end] + "\n") # Write out as fasta file
 
 

@@ -12,7 +12,7 @@ import regex as re
 filename = sys.argv[1] # name of input file i.e. DMS3.fasta
 outfile = sys.argv[2] # name of output i.e. spacers.fna
 
-# Find PAM sites, select subsequent 32bp and write out:
+# Find PAM sites, select proximal 32bp and write out:
 
 with open(outfile,"w") as f:
 	for record in SeqIO.parse(filename, "fasta"):
@@ -21,7 +21,7 @@ with open(outfile,"w") as f:
 			spacer_end = match.start()
 			spacer_start = spacer_end - 32 # Forgot spacer preceeds PAM
 			#spacer_end = spacer_start + 32 # Can vary for spacer length 
-			f.write(">" + str(spacer_start) + "\n" + str(record.seq)[spacer_start:spacer_end] + "\n") # Write out as fasta file
+			f.write(">" + str(spacer_start) + "\n" + str(record.seq)[spacer_start:spacer_end+2] + "\n") # Write out as fasta file
 
 
 
